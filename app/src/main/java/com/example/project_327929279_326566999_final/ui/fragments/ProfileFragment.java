@@ -1,0 +1,22 @@
+package com.example.project_327929279_326566999_final.ui.fragments;
+
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import com.example.project_327929279_326566999_final.R;
+
+public class ProfileFragment extends Fragment {
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        TextView tvProfile = view.findViewById(R.id.tvProfile);
+        tvProfile.setText("Pizza App v1.0\nDeveloper: Your Name");
+        return view;
+    }
+}

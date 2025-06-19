@@ -18,4 +18,8 @@ public interface PizzaDao {
 
     @Query("SELECT * FROM pizzas")
     LiveData<List<Pizza>> getAllPizzas();
+
+    @Query("SELECT * FROM pizzas WHERE userId = :userId")
+    LiveData<List<Pizza>> getPizzasByUserId(int userId);
+
 }

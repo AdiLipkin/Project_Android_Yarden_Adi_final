@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">Project_327929279_326566999_final</string>
+    <string-array name="pizza_sizes">
+        <item>S</item>
+        <item>M</item>
+        <item>L</item>
+    </string-array>
+
+    <string-array name="drinks">
+        <item>Coke</item>
+        <item>Coke Zero</item>
+        <item>Orange Juice</item>
+        <item>Nescafe</item>
+    </string-array>
+
+    <string name="order_list_title">ההזמנות שלי</string>
+    <string name="order_price">מחיר: %1$d ₪</string>
+    <string name="pizza_name">שם הפיצה</string>
+    <string name="pizza_size">גודל: %1$s</string>
+    <string name="pizza_toppings">תוספות: %1$s</string>
+    <string name="pizza_drink">שתייה: %1$s</string>
 </resources>

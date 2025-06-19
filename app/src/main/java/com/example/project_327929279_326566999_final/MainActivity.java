@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import com.example.project_327929279_326566999_final.databinding.ActivityMainBinding;
 import com.example.project_327929279_326566999_final.ui.fragments.HomeFragment;
 import com.example.project_327929279_326566999_final.ui.fragments.OrderFragment;
+import com.example.project_327929279_326566999_final.ui.fragments.OrderListFragment;
 import com.example.project_327929279_326566999_final.ui.fragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -17,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -29,10 +31,10 @@ public class MainActivity extends AppCompatActivity {
             Fragment fragment;
             int id = item.getItemId();
             if (id == R.id.homeFragment) {
-                fragment = new HomeFragment();
-            } else if (id == R.id.orderFragment) {
-                fragment = new OrderFragment();
-            } else if (id == R.id.profileFragment) {
+                fragment = new HomeFragment();}
+            else if (id == R.id.orderListFragment) { // שם נכון מהתפריט
+                    fragment = new OrderListFragment(); // מחליף את OrderFragment
+                }else if (id == R.id.profileFragment) {
                 fragment = new ProfileFragment();
             } else {
                 return false;

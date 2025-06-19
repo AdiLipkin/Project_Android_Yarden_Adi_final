@@ -7,21 +7,39 @@
 
     <EditText
         android:id="@+id/etName"
-        android:layout_width="2159dp"
-        android:layout_height="2438dp"
-        android:hint="Enter Pizza Name" />
-
-    <EditText
-        android:id="@+id/etSize"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Size (Small, Medium, Large)" />
+        android:hint="Enter Pizza Name" />
+
+    <Spinner
+        android:id="@+id/spSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/pizza_sizes" /> <!-- Gave sizes in strings.xml -->
 
     <CheckBox
         android:id="@+id/cbCheese"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Extra Cheese" />
+
+    <CheckBox
+        android:id="@+id/cbCorn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Corn" />
+
+    <CheckBox
+        android:id="@+id/cbOlives"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Olives" />
+
+    <Spinner
+        android:id="@+id/spDrink"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/drinks" /> <!-- Drinks options in strings.xml -->
 
     <Button
         android:id="@+id/btnOrder"

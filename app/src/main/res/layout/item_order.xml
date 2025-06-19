@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="?android:attr/selectableItemBackground">
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pizza Name"
+        android:textStyle="bold"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tvSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Size: Medium"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvToppings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Toppings: Corn, Olives"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvDrink"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Drink: Cola"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Price: 45 ₪"
+        android:textSize="16sp"
+        android:textColor="@android:color/holo_green_dark" />
+
+</LinearLayout>

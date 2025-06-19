@@ -16,7 +16,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         TextView tvProfile = view.findViewById(R.id.tvProfile);
-        tvProfile.setText("Pizza App v1.0\nDeveloper: Your Name");
+        tvProfile.setText("Pizza App v1.0\nDeveloper: Adi & Yarden");
         return view;
     }
 }

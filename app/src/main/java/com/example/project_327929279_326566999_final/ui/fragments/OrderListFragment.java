@@ -4,18 +4,20 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.project_327929279_326566999_final.R;
-import com.example.project_327929279_326566999_final.adapters.PizzaAdapter;
-import com.example.project_327929279_326566999_final.viewmodel.PizzaViewModel;
+import com.example.project_327929279_326566999_final.adapters.OrderAdapter;
+import com.example.project_327929279_326566999_final.viewmodel.OrderViewModel;
 
 public class OrderListFragment extends Fragment {
-    private PizzaViewModel pizzaViewModel;
+    private OrderViewModel orderViewModel;
 
     @Nullable
     @Override
@@ -24,11 +26,11 @@ public class OrderListFragment extends Fragment {
 
         RecyclerView recyclerView = view.findViewById(R.id.rvOrders);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        PizzaAdapter adapter = new PizzaAdapter();
+        OrderAdapter adapter = new OrderAdapter();
         recyclerView.setAdapter(adapter);
 
-        pizzaViewModel = new ViewModelProvider(this).get(PizzaViewModel.class);
-        pizzaViewModel.getAllPizzas().observe(getViewLifecycleOwner(), adapter::submitList);
+        orderViewModel = new ViewModelProvider(this).get(OrderViewModel.class);
+        orderViewModel.getAllOrders().observe(getViewLifecycleOwner(), adapter::submitList);
 
         return view;
     }

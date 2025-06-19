@@ -22,4 +22,5 @@
         android:id="@+id/profileFragment"
         android:name="com.example.project_327929279_326566999_final.ui.fragments.ProfileFragment"
         android:label="Profile" />
+
 </navigation>

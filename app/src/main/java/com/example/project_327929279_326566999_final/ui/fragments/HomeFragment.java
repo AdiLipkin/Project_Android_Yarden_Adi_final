@@ -178,7 +178,7 @@ public class HomeFragment extends Fragment {
                 break;
             case "מרגריטה":
             default:
-                toppings = new String[]{"פטריות", "תירס", "בולגרית", "בצל", "זיתים", "פפרוני", "אקסטרה גבינה"};
+                toppings = new String[]{"פטריות", "תירס", "בולגרית", "זיתים", "אקסטרה גבינה"};
                 toppingsFree = false;
                 break;
         }

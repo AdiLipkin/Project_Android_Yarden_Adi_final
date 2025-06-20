@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
 
             userRepository.login(username, password, user -> runOnUiThread(() -> {
                 if (user != null) {
-                    // ✅ שמירת מזהה המשתמש ל-SharedPreferences
+
                     SharedPreferences prefs = getSharedPreferences("user_prefs", MODE_PRIVATE);
                     prefs.edit().putInt("user_id", user.id).apply();
 

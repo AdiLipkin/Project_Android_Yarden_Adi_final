@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment;
 import com.example.project_327929279_326566999_final.databinding.ActivityMainBinding;
 import com.example.project_327929279_326566999_final.ui.fragments.HomeFragment;
 import com.example.project_327929279_326566999_final.ui.fragments.OrderListFragment;
-import com.example.project_327929279_326566999_final.ui.fragments.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,8 +27,6 @@ public class MainActivity extends AppCompatActivity {
                 loadFragment(new HomeFragment());
             } else if (itemId == R.id.orderListFragment) {
                 loadFragment(new OrderListFragment());
-            } else if (itemId == R.id.profileFragment) {
-                loadFragment(new ProfileFragment());
             }
 
             return true;

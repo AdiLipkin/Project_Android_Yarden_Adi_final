@@ -140,7 +140,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="בחר תוספות"
+            android:text=" בחר תוספות - 3₪ "
             android:textStyle="bold"
             android:layout_marginTop="12dp" />
 
@@ -155,15 +155,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="בחר שתייה"
+            android:text=" בחר שתייה - 10₪"
             android:textStyle="bold"
             android:layout_marginTop="12dp" />
 
         <!-- רוטב -->
         <Spinner
             android:id="@+id/spinnerDrink"
-            android:layout_width="368dp"
-            android:layout_height="65dp"
+            android:layout_width="366dp"
+            android:layout_height="59dp"
             android:entries="@array/drink_options"
             android:spinnerMode="dropdown" />
 
@@ -177,7 +177,7 @@
         <Spinner
             android:id="@+id/spinnerSauce"
             android:layout_width="match_parent"
-            android:layout_height="53dp"
+            android:layout_height="50dp"
             android:entries="@array/sauce_options"
             android:spinnerMode="dropdown" />
 

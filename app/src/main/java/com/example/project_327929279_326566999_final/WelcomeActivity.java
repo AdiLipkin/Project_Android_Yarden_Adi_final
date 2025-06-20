@@ -15,6 +15,8 @@ public class WelcomeActivity extends AppCompatActivity {
 
         // בדיקת התחברות
         SharedPreferences prefs = getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
+        prefs.edit().clear().apply();  // מחיקת ההתחברות השמורה
+
         int userId = prefs.getInt("user_id", -1);
 
         if (userId != -1) {

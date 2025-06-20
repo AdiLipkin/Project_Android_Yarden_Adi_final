@@ -9,10 +9,6 @@
         android:icon="@android:drawable/ic_menu_agenda"
         android:title="Orders" />
 
-    <item
-        android:id="@+id/profileFragment"
-        android:icon="@android:drawable/ic_menu_info_details"
-        android:title="Profile" />
 
 
 </menu>

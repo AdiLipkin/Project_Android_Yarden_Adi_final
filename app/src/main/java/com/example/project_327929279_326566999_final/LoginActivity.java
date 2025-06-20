@@ -1,6 +1,7 @@
 package com.example.project_327929279_326566999_final;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,7 +39,10 @@ public class LoginActivity extends AppCompatActivity {
 
             userRepository.login(username, password, user -> runOnUiThread(() -> {
                 if (user != null) {
-                    // Save user session (shared prefs, etc.)
+                    // ✅ שמירת מזהה המשתמש ל-SharedPreferences
+                    SharedPreferences prefs = getSharedPreferences("user_prefs", MODE_PRIVATE);
+                    prefs.edit().putInt("user_id", user.id).apply();
+
                     Toast.makeText(this, "Welcome " + user.username, Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
@@ -53,4 +57,5 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
         });
     }
+
 }

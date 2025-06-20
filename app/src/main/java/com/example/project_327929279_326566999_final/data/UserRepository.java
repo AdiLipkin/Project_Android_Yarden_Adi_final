@@ -9,7 +9,6 @@ import com.example.project_327929279_326566999_final.data.entities.User;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-
 public class UserRepository {
     private final UserDao userDao;
     private final Executor executor = Executors.newSingleThreadExecutor();
@@ -23,7 +22,8 @@ public class UserRepository {
         executor.execute(() -> {
             User existing = userDao.getUserByUsername(user.username);
             if (existing == null) {
-                userDao.insert(user);
+                long generatedId = userDao.insert(user);  // קבלת ה-ID
+                user.id = (int) generatedId;              // שמירה באובייקט
                 onSuccess.run();
             } else {
                 onUserExists.run();
@@ -42,3 +42,4 @@ public class UserRepository {
         void onResult(User user);
     }
 }
+

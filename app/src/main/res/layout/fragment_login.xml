@@ -1,4 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFF8F0"
@@ -11,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="65dp"
         android:backgroundTint="#000000"
-        android:hint="שם משתמש" />
+        android:hint="שם משתמש"
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/etPassword"
@@ -34,8 +37,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="#FA146F"
-        android:baselineAligned="false"
         android:text="הרשמה"
         android:textColor="#FFFFFF" />
-
 </LinearLayout>

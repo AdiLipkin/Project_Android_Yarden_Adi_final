@@ -1,5 +1,7 @@
 package com.example.project_327929279_326566999_final.ui.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,8 +32,15 @@ public class OrderListFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         orderViewModel = new ViewModelProvider(this).get(OrderViewModel.class);
-        orderViewModel.getAllOrders().observe(getViewLifecycleOwner(), adapter::submitList);
+
+        SharedPreferences prefs = requireContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
+        int userId = prefs.getInt("user_id", -1);
+
+        if (userId != -1) {
+            orderViewModel.getOrdersForUser(userId).observe(getViewLifecycleOwner(), adapter::submitList);
+        }
 
         return view;
     }
+
 }

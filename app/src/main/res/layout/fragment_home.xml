@@ -2,7 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="#FFF8F0">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -10,52 +11,111 @@
         android:orientation="vertical"
         android:gravity="center_horizontal">
 
-        <!-- סוג פיצה -->
+        <!-- כותרת -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="בחר פיצה"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
 
+        <!-- RadioGroup עבור סוגי הפיצה -->
         <RadioGroup
-            android:id="@+id/radioPizzaType"
+            android:id="@+id/radioPizzaGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="12dp">
 
-            <RadioButton
-                android:id="@+id/radioMargarita"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="מרגריטה" />
+            <!-- מרגריטה -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_height="200dp">
 
-            <RadioButton
-                android:id="@+id/radioPesto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="פסטו" />
+                <ImageButton
+                    android:id="@+id/imgMargarita"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/pizzamargarita"
+                    android:scaleType="centerCrop"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="מרגריטה" />
 
-            <RadioButton
-                android:id="@+id/radioAlfredo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="אלפרדו" />
+                <RadioButton
+                    android:id="@+id/radioMargarita"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="מרגריטה" />
+            </LinearLayout>
+
+            <!-- פסטו -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_height="200dp">
+
+                <ImageButton
+                    android:id="@+id/imgPesto"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/pesto_pizza"
+                    android:scaleType="centerCrop"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="פסטו" />
+
+                <RadioButton
+                    android:id="@+id/radioPesto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="פסטו" />
+            </LinearLayout>
+
+            <!-- אלפרדו -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_height="200dp">
+
+                <ImageButton
+                    android:id="@+id/imgAlfredo"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/alfredopizza"
+                    android:scaleType="centerCrop"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="אלפרדו" />
+
+                <RadioButton
+                    android:id="@+id/radioAlfredo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="אלפרדו" />
+            </LinearLayout>
         </RadioGroup>
 
-        <!-- בחירת גודל -->
+        <!-- גודל פיצה -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="בחר גודל"
-            android:layout_marginTop="16dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginTop="12dp" />
 
         <RadioGroup
             android:id="@+id/radioSize"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
 
             <RadioButton
                 android:id="@+id/sizeS"
@@ -81,52 +141,55 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="בחר תוספות"
-            android:layout_marginTop="16dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginTop="12dp" />
 
         <LinearLayout
             android:id="@+id/toppingsContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingTop="4dp" />
+            android:layout_marginTop="4dp" />
 
         <!-- שתייה -->
         <TextView
-            android:layout_width="80dp"
-            android:layout_height="32dp"
-            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="בחר שתייה"
-            android:textStyle="bold" />
-
-        <Spinner
-            android:id="@+id/spinnerDrink"
-            android:layout_width="379dp"
-            android:layout_height="66dp"
-            android:entries="@array/drink_options" />
+            android:textStyle="bold"
+            android:layout_marginTop="12dp" />
 
         <!-- רוטב -->
+        <Spinner
+            android:id="@+id/spinnerDrink"
+            android:layout_width="368dp"
+            android:layout_height="65dp"
+            android:entries="@array/drink_options"
+            android:spinnerMode="dropdown" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
             android:text="בחר רוטב"
-            android:layout_marginTop="16dp"
             android:textStyle="bold" />
 
         <Spinner
             android:id="@+id/spinnerSauce"
             android:layout_width="match_parent"
-            android:layout_height="75dp"
-            android:entries="@array/sauce_options" />
+            android:layout_height="53dp"
+            android:entries="@array/sauce_options"
+            android:spinnerMode="dropdown" />
 
-        <!-- כפתור -->
+        <!-- כפתור ביצוע הזמנה -->
         <Button
             android:id="@+id/btnOrder"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="בצע הזמנה"
             android:layout_marginTop="24dp"
-            android:backgroundTint="@android:color/black"
+            android:backgroundTint="@android:color/holo_red_dark"
+            android:padding="12dp"
+            android:text="בצע הזמנה"
             android:textColor="@android:color/white" />
 
     </LinearLayout>

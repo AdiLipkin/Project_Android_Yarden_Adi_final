@@ -1,5 +1,7 @@
 package com.example.project_327929279_326566999_final.ui.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,33 +30,72 @@ public class HomeFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
         orderViewModel = new ViewModelProvider(this).get(OrderViewModel.class);
 
-        RadioGroup pizzaGroup = view.findViewById(R.id.radioPizzaType);
+        // רכיבי ממשק
+        RadioButton radioMargarita = view.findViewById(R.id.radioMargarita);
+        RadioButton radioPesto = view.findViewById(R.id.radioPesto);
+        RadioButton radioAlfredo = view.findViewById(R.id.radioAlfredo);
+
+        ImageButton imgMargarita = view.findViewById(R.id.imgMargarita);
+        ImageButton imgPesto = view.findViewById(R.id.imgPesto);
+        ImageButton imgAlfredo = view.findViewById(R.id.imgAlfredo);
+
         RadioGroup sizeGroup = view.findViewById(R.id.radioSize);
         Spinner drinkSpinner = view.findViewById(R.id.spinnerDrink);
         Spinner sauceSpinner = view.findViewById(R.id.spinnerSauce);
         LinearLayout toppingsContainer = view.findViewById(R.id.toppingsContainer);
         Button btnOrder = view.findViewById(R.id.btnOrder);
 
-        // בחירת סוג פיצה
-        // בחירת סוג פיצה
-        pizzaGroup.setOnCheckedChangeListener((group, checkedId) -> {
-            if (checkedId == R.id.radioMargarita) {
-                selectedPizza = "מרגריטה";
-                updateToppings(toppingsContainer, selectedPizza);
-            } else if (checkedId == R.id.radioPesto) {
-                selectedPizza = "פסטו";
-                updateToppings(toppingsContainer, selectedPizza);
-            } else if (checkedId == R.id.radioAlfredo) {
-                selectedPizza = "אלפרדו";
-                updateToppings(toppingsContainer, selectedPizza);
-            }
-        });
+        // ברירת מחדל
+        radioMargarita.setChecked(true);
+        updateToppings(toppingsContainer, selectedPizza);
 
-// בחירת גודל
+        // מאזין אחיד לפיצה (תמונה או רדיו)
+        View.OnClickListener pizzaSelectionListener = v -> {
+            radioMargarita.setChecked(false);
+            radioPesto.setChecked(false);
+            radioAlfredo.setChecked(false);
+
+            if (v instanceof RadioButton) {
+                ((RadioButton) v).setChecked(true);
+            } else {
+                int id = v.getId();
+                if (id == R.id.imgMargarita) {
+                    radioMargarita.setChecked(true);
+                } else if (id == R.id.imgPesto) {
+                    radioPesto.setChecked(true);
+                } else if (id == R.id.imgAlfredo) {
+                    radioAlfredo.setChecked(true);
+                }
+            }
+
+            // עדכון סוג הפיצה לפי הבחירה
+            if (radioMargarita.isChecked()) {
+                selectedPizza = "מרגריטה";
+            } else if (radioPesto.isChecked()) {
+                selectedPizza = "פסטו";
+            } else if (radioAlfredo.isChecked()) {
+                selectedPizza = "אלפרדו";
+            }
+
+            updateToppings(toppingsContainer, selectedPizza);
+        };
+
+        // מאזינים לפיצה (תמונות + כפתורים)
+        radioMargarita.setOnClickListener(pizzaSelectionListener);
+        radioPesto.setOnClickListener(pizzaSelectionListener);
+        radioAlfredo.setOnClickListener(pizzaSelectionListener);
+        imgMargarita.setOnClickListener(pizzaSelectionListener);
+        imgPesto.setOnClickListener(pizzaSelectionListener);
+        imgAlfredo.setOnClickListener(pizzaSelectionListener);
+
+        // מאזין לשינוי גודל
         sizeGroup.setOnCheckedChangeListener((group, checkedId) -> {
             if (checkedId == R.id.sizeS) {
                 selectedSize = "S";
@@ -65,8 +106,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        // טופינגים דינמיים מתעדכנים ב-updateToppings()
-
+        // לחיצה על "בצע הזמנה"
         btnOrder.setOnClickListener(v -> {
             selectedToppings.clear();
             for (int i = 0; i < toppingsContainer.getChildCount(); i++) {
@@ -79,22 +119,48 @@ public class HomeFragment extends Fragment {
                 }
             }
 
-            selectedDrink = drinkSpinner.getSelectedItem().toString();
-            selectedSauce = sauceSpinner.getSelectedItem().toString();
+            selectedDrink = (String) drinkSpinner.getSelectedItem();
+            selectedSauce = (String) sauceSpinner.getSelectedItem();
 
-            int totalPrice = calculatePrice();
+            int totalPrice = calculatePrice(toppingsContainer);
 
-            Order order = new Order(selectedPizza, selectedSize, String.join(", ", selectedToppings), selectedDrink, totalPrice, 1);
+            // קבלת userId מתוך SharedPreferences
+            SharedPreferences prefs = requireContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
+            int userId = prefs.getInt("user_id", -1);
+
+            if (userId == -1) {
+                Toast.makeText(getContext(), "שגיאה בזיהוי המשתמש", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            Order order = new Order(
+                    selectedPizza,
+                    selectedSize,
+                    String.join(", ", selectedToppings),
+                    selectedDrink + " + " + selectedSauce,
+                    totalPrice,
+                    userId // ✅ משתמש מחובר
+            );
+
+
             orderViewModel.insert(order);
-            Toast.makeText(getContext(), "הזמנה בוצעה! סה\"כ: " + totalPrice + " ש\"ח", Toast.LENGTH_LONG).show();
-        });
 
-        // ברירת מחדל: מרגריטה
-        updateToppings(toppingsContainer, selectedPizza);
+            String summary = "פיצה: " + selectedPizza +
+                    " (" + selectedSize + ")\n" +
+                    "תוספות: " + (selectedToppings.isEmpty() ? "ללא" : String.join(", ", selectedToppings)) + "\n" +
+                    "שתייה: " + selectedDrink + "\n" +
+                    "רוטב: " + selectedSauce + "\n" +
+                    "סה\"כ לתשלום: " + totalPrice + " ש\"ח";
+
+            Toast.makeText(getContext(), summary, Toast.LENGTH_LONG).show();
+        });
 
         return view;
     }
 
+    /**
+     * עדכון תוספות לפי סוג הפיצה
+     */
     private void updateToppings(LinearLayout container, String pizzaType) {
         container.removeAllViews();
 
@@ -112,7 +178,7 @@ public class HomeFragment extends Fragment {
                 break;
             case "מרגריטה":
             default:
-                toppings = new String[]{"פטריות", "תירס", "בצל", "בולגרית", "אקסטרה גבינה", "זיתים", "פפרוני"};
+                toppings = new String[]{"פטריות", "תירס", "בולגרית", "בצל", "זיתים", "פפרוני", "אקסטרה גבינה"};
                 toppingsFree = false;
                 break;
         }
@@ -120,14 +186,17 @@ public class HomeFragment extends Fragment {
         for (String topping : toppings) {
             CheckBox cb = new CheckBox(getContext());
             cb.setText(topping);
-            cb.setChecked(pizzaType.equals("פסטו")); // פסטו – מסומן כברירת מחדל
+            cb.setChecked(pizzaType.equals("פסטו")); // פסטו – תוספות מסומנות כברירת מחדל
             container.addView(cb);
         }
 
         container.setTag(toppingsFree);
     }
 
-    private int calculatePrice() {
+    /**
+     * חישוב מחיר כולל לפי גודל, תוספות, שתייה ורוטב
+     */
+    private int calculatePrice(LinearLayout toppingsContainer) {
         int basePrice;
         switch (selectedSize) {
             case "S":
@@ -143,10 +212,16 @@ public class HomeFragment extends Fragment {
                 basePrice = 30;
         }
 
-        boolean toppingsFree = (boolean) ((LinearLayout) requireView().findViewById(R.id.toppingsContainer)).getTag();
+        boolean toppingsFree = false;
+        Object tag = toppingsContainer.getTag();
+        if (tag instanceof Boolean) {
+            toppingsFree = (Boolean) tag;
+        }
+
         int toppingCost = toppingsFree ? 0 : selectedToppings.size() * 3;
         int drinkCost = 10;
+        int sauceCost = 5;
 
-        return basePrice + toppingCost + drinkCost;
+        return basePrice + toppingCost + drinkCost + sauceCost;
     }
 }

@@ -1,49 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="16dp">
 
-    <EditText
-        android:id="@+id/etName"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Pizza Name" />
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
-    <Spinner
-        android:id="@+id/spSize"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:entries="@array/pizza_sizes" /> <!-- Gave sizes in strings.xml -->
+        <!-- סוג פיצה -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="בחר פיצה"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-    <CheckBox
-        android:id="@+id/cbCheese"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Extra Cheese" />
+        <RadioGroup
+            android:id="@+id/radioPizzaType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-    <CheckBox
-        android:id="@+id/cbCorn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Corn" />
+            <RadioButton
+                android:id="@+id/radioMargarita"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="מרגריטה" />
 
-    <CheckBox
-        android:id="@+id/cbOlives"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Olives" />
+            <RadioButton
+                android:id="@+id/radioPesto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="פסטו" />
 
-    <Spinner
-        android:id="@+id/spDrink"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:entries="@array/drinks" /> <!-- Drinks options in strings.xml -->
+            <RadioButton
+                android:id="@+id/radioAlfredo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="אלפרדו" />
+        </RadioGroup>
 
-    <Button
-        android:id="@+id/btnOrder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Place Order" />
-</LinearLayout>
+        <!-- בחירת גודל -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="בחר גודל"
+            android:layout_marginTop="16dp"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/radioSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/sizeS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="S" />
+
+            <RadioButton
+                android:id="@+id/sizeM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="M" />
+
+            <RadioButton
+                android:id="@+id/sizeL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="L" />
+        </RadioGroup>
+
+        <!-- תוספות -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="בחר תוספות"
+            android:layout_marginTop="16dp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/toppingsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="4dp" />
+
+        <!-- שתייה -->
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="16dp"
+            android:text="בחר שתייה"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/spinnerDrink"
+            android:layout_width="379dp"
+            android:layout_height="66dp"
+            android:entries="@array/drink_options" />
+
+        <!-- רוטב -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="בחר רוטב"
+            android:layout_marginTop="16dp"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/spinnerSauce"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:entries="@array/sauce_options" />
+
+        <!-- כפתור -->
+        <Button
+            android:id="@+id/btnOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="בצע הזמנה"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@android:color/black"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+</ScrollView>

@@ -4,90 +4,149 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.Toast;
+import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+
 import com.example.project_327929279_326566999_final.R;
-import com.example.project_327929279_326566999_final.data.entities.Pizza;
-import com.example.project_327929279_326566999_final.viewmodel.PizzaViewModel;
+import com.example.project_327929279_326566999_final.data.entities.Order;
+import com.example.project_327929279_326566999_final.viewmodel.OrderViewModel;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
-    private PizzaViewModel pizzaViewModel;
+
+    private OrderViewModel orderViewModel;
+    private String selectedPizza = "מרגריטה";
+    private String selectedSize = "S";
+    private final List<String> selectedToppings = new ArrayList<>();
+    private String selectedDrink = "";
+    private String selectedSauce = "";
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        orderViewModel = new ViewModelProvider(this).get(OrderViewModel.class);
 
-        pizzaViewModel = new ViewModelProvider(this).get(PizzaViewModel.class);
-
-        // UI components
-        EditText etName = view.findViewById(R.id.etName);
-        Spinner spSize = view.findViewById(R.id.spSize);  // Spinner for pizza size
-        CheckBox cbCheese = view.findViewById(R.id.cbCheese);  // CheckBox for extra cheese
-        CheckBox cbCorn = view.findViewById(R.id.cbCorn);  // CheckBox for corn topping
-        CheckBox cbOlives = view.findViewById(R.id.cbOlives);  // CheckBox for olives topping
-        Spinner spDrink = view.findViewById(R.id.spDrink);  // Spinner for drink choice
+        RadioGroup pizzaGroup = view.findViewById(R.id.radioPizzaType);
+        RadioGroup sizeGroup = view.findViewById(R.id.radioSize);
+        Spinner drinkSpinner = view.findViewById(R.id.spinnerDrink);
+        Spinner sauceSpinner = view.findViewById(R.id.spinnerSauce);
+        LinearLayout toppingsContainer = view.findViewById(R.id.toppingsContainer);
         Button btnOrder = view.findViewById(R.id.btnOrder);
 
-        btnOrder.setOnClickListener(v -> {
-            String name = etName.getText().toString();
-            String size = spSize.getSelectedItem().toString();
-            List<String> toppings = new ArrayList<>();
-
-            // Add toppings if checked
-            if (cbCheese.isChecked()) toppings.add("Extra Cheese");
-            if (cbCorn.isChecked()) toppings.add("Corn");
-            if (cbOlives.isChecked()) toppings.add("Olives");
-
-            // Get selected drink
-            String drink = spDrink.getSelectedItem().toString();
-
-            // Calculate price
-            int price = calculatePrice(size, toppings, drink);
-
-            if (!name.isEmpty()) {
-                Pizza pizza = new Pizza(name, size, toppings, drink, cbCheese.isChecked(), price, 1);  // 1 for now as userId
-                pizzaViewModel.insertPizza(pizza);
-                Toast.makeText(getContext(), "Pizza ordered!", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(getContext(), "Please enter a pizza name", Toast.LENGTH_SHORT).show();
+        // בחירת סוג פיצה
+        // בחירת סוג פיצה
+        pizzaGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.radioMargarita) {
+                selectedPizza = "מרגריטה";
+                updateToppings(toppingsContainer, selectedPizza);
+            } else if (checkedId == R.id.radioPesto) {
+                selectedPizza = "פסטו";
+                updateToppings(toppingsContainer, selectedPizza);
+            } else if (checkedId == R.id.radioAlfredo) {
+                selectedPizza = "אלפרדו";
+                updateToppings(toppingsContainer, selectedPizza);
             }
         });
+
+// בחירת גודל
+        sizeGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.sizeS) {
+                selectedSize = "S";
+            } else if (checkedId == R.id.sizeM) {
+                selectedSize = "M";
+            } else if (checkedId == R.id.sizeL) {
+                selectedSize = "L";
+            }
+        });
+
+        // טופינגים דינמיים מתעדכנים ב-updateToppings()
+
+        btnOrder.setOnClickListener(v -> {
+            selectedToppings.clear();
+            for (int i = 0; i < toppingsContainer.getChildCount(); i++) {
+                View child = toppingsContainer.getChildAt(i);
+                if (child instanceof CheckBox) {
+                    CheckBox cb = (CheckBox) child;
+                    if (cb.isChecked()) {
+                        selectedToppings.add(cb.getText().toString());
+                    }
+                }
+            }
+
+            selectedDrink = drinkSpinner.getSelectedItem().toString();
+            selectedSauce = sauceSpinner.getSelectedItem().toString();
+
+            int totalPrice = calculatePrice();
+
+            Order order = new Order(selectedPizza, selectedSize, String.join(", ", selectedToppings), selectedDrink, totalPrice, 1);
+            orderViewModel.insert(order);
+            Toast.makeText(getContext(), "הזמנה בוצעה! סה\"כ: " + totalPrice + " ש\"ח", Toast.LENGTH_LONG).show();
+        });
+
+        // ברירת מחדל: מרגריטה
+        updateToppings(toppingsContainer, selectedPizza);
 
         return view;
     }
 
-    private int calculatePrice(String size, List<String> toppings, String drink) {
-        int basePrice = 0;
+    private void updateToppings(LinearLayout container, String pizzaType) {
+        container.removeAllViews();
 
-        // Set base price based on size
-        switch (size) {
-            case "S":
-                basePrice = 25;
+        String[] toppings;
+        boolean toppingsFree;
+
+        switch (pizzaType) {
+            case "פסטו":
+                toppings = new String[]{"גבינת עיזים", "בצל אדום", "תוספת גבינה", "זיתי קלמטה"};
+                toppingsFree = true;
                 break;
-            case "M":
-                basePrice = 35;
+            case "אלפרדו":
+                toppings = new String[]{"פטריות", "בולגרית", "אקסטרה גבינה"};
+                toppingsFree = false;
                 break;
-            case "L":
-                basePrice = 55;
+            case "מרגריטה":
+            default:
+                toppings = new String[]{"פטריות", "תירס", "בצל", "בולגרית", "אקסטרה גבינה", "זיתים", "פפרוני"};
+                toppingsFree = false;
                 break;
         }
 
-        // Add price for toppings (each topping costs 3)
-        basePrice += toppings.size() * 3;
+        for (String topping : toppings) {
+            CheckBox cb = new CheckBox(getContext());
+            cb.setText(topping);
+            cb.setChecked(pizzaType.equals("פסטו")); // פסטו – מסומן כברירת מחדל
+            container.addView(cb);
+        }
 
-        // Add price for drink (each drink costs 10)
-        basePrice += 10;  // All drinks cost 10 for simplicity
+        container.setTag(toppingsFree);
+    }
 
-        return basePrice;
+    private int calculatePrice() {
+        int basePrice;
+        switch (selectedSize) {
+            case "S":
+                basePrice = 30;
+                break;
+            case "M":
+                basePrice = 40;
+                break;
+            case "L":
+                basePrice = 50;
+                break;
+            default:
+                basePrice = 30;
+        }
+
+        boolean toppingsFree = (boolean) ((LinearLayout) requireView().findViewById(R.id.toppingsContainer)).getTag();
+        int toppingCost = toppingsFree ? 0 : selectedToppings.size() * 3;
+        int drinkCost = 10;
+
+        return basePrice + toppingCost + drinkCost;
     }
 }

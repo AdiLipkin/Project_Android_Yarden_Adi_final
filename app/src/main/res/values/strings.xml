@@ -12,6 +12,21 @@
         <item>Orange Juice</item>
         <item>Nescafe</item>
     </string-array>
+    <string-array name="drink_options">
+        <item>קולה</item>
+        <item>קולה זירו</item>
+        <item>ספרייט</item>
+        <item>נסטי</item>
+        <item>מים</item>
+    </string-array>
+
+    <string-array name="sauce_options">
+        <item>שום</item>
+        <item>אלף איים</item>
+        <item>תבלין לפיצה</item>
+        <item>צילי חריף</item>
+    </string-array>
+
 
     <string name="order_list_title">ההזמנות שלי</string>
     <string name="order_price">מחיר: %1$d ₪</string>

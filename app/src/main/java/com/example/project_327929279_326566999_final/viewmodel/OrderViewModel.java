@@ -12,14 +12,14 @@ import java.util.List;
 public class OrderViewModel extends AndroidViewModel {
     private OrderRepository orderRepository;
     private LiveData<List<Order>> allOrders;
-    private int userId = -1;  // ברירת מחדל, או תקבלי ממשהו אחר
+    private int userId = -1;
 
     public OrderViewModel(Application application) {
         super(application);
         orderRepository = new OrderRepository(application);
 
-        // אם יש userId: את יכולה להגדיר setter ולקרוא מחדש
-        allOrders = orderRepository.getOrdersByUserId(userId);  // או ברירת מחדל
+
+        allOrders = orderRepository.getOrdersByUserId(userId);
     }
 
     public void setUserId(int userId) {

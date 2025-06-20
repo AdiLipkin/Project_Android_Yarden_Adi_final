@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF5E1"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="24dp">
+
+    <ImageView
+        android:id="@+id/pizzaImage"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:src="@drawable/pizza_image"
+        android:contentDescription="Pizza image"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/welcomeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome to Adi's and Yarden's Pizza"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginTop="24dp"
+        android:textColor="#D84315" />
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="לכניסה לחשבון"
+        android:textColor="#FFFFFF"
+        android:background="#000000"
+        android:layout_marginTop="32dp"
+        android:padding="12dp"/>
+</LinearLayout>
